@@ -22,6 +22,7 @@ import {
   useLocation,
 } from "react-router-dom";
 import { SideBar } from "./sidebar";
+import { PromptSelector} from "./prompt-selector";
 import { useAppConfig } from "../store/config";
 import { AuthPage } from "./auth";
 
@@ -138,6 +139,8 @@ function Screen() {
               <Route path={Path.Settings} element={<Settings />} />
             </Routes>
           </div>
+
+          <PromptSelector className={isHome ? styles["sidebar-show"] : ""} />
         </>
       )}
     </div>

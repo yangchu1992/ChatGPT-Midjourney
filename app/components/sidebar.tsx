@@ -5,6 +5,7 @@ import styles from "./home.module.scss";
 import { IconButton } from "./button";
 import SettingsIcon from "../icons/settings.svg";
 import GithubIcon from "../icons/github.svg";
+import IsWeeIcon from "../icons/iswee.svg";
 import ChatGptIcon from "../icons/chatgpt.svg";
 import AddIcon from "../icons/add.svg";
 import CloseIcon from "../icons/close.svg";
@@ -119,12 +120,12 @@ export function SideBar(props: { className?: string }) {
       }`}
     >
       <div className={styles["sidebar-header"]}>
-        <div className={styles["sidebar-title"]}>ChatGPT-Midjourney</div>
+        <div className={styles["sidebar-title"]}>iSpark</div>
         <div className={styles["sidebar-sub-title"]}>
-          Your own AI assistant.
+          艺术范式AI助手
         </div>
         <div className={styles["sidebar-logo"] + " no-dark"}>
-          <ChatGptIcon />
+          <IsWeeIcon />
         </div>
       </div>
 

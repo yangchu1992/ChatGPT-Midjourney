@@ -31,6 +31,7 @@ export enum StoreKey {
   Config = "app-config",
   Mask = "mask-store",
   Prompt = "prompt-store",
+  PromptWords = "prompt-words-store",
   Update = "chat-update",
 }
 

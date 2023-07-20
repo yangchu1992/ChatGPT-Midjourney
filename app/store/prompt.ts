@@ -6,9 +6,11 @@ import { StoreKey } from "../constant";
 
 export interface Prompt {
   id?: number;
-  isUser?: boolean;
-  title: string;
-  content: string;
+    text?: string;
+    dir?: string;
+    desc?: string;
+    lang_zh?: string;
+    subType?: string;
 }
 
 export interface PromptStore {
@@ -74,7 +76,6 @@ export const usePromptStore = create<PromptStore>()(
       add(prompt) {
         const prompts = get().prompts;
         prompt.id = get().latestId + 1;
-        prompt.isUser = true;
         prompts[prompt.id] = prompt;
 
         set(() => ({
@@ -146,7 +147,7 @@ export const usePromptStore = create<PromptStore>()(
         fetch(PROMPT_URL)
           .then((res) => res.json())
           .then((res) => {
-            let fetchPrompts = [res.en, res.cn];
+              let fetchPrompts = [res.en, res.cn];
             if (getLang() === "cn") {
               fetchPrompts = fetchPrompts.reverse();
             }
@@ -168,7 +169,7 @@ export const usePromptStore = create<PromptStore>()(
 
             const allPromptsForSearch = builtinPrompts
               .reduce((pre, cur) => pre.concat(cur), [])
-              .filter((v) => !!v.title && !!v.content);
+              .filter((v) => true);
             SearchService.count.builtin = res.en.length + res.cn.length;
             SearchService.init(allPromptsForSearch, userPrompts);
           });

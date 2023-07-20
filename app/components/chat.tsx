@@ -310,6 +310,7 @@ export function ChatActions(props: {
     showPromptModal: () => void;
     scrollToBottom: () => void;
     showPromptHints: () => void;
+    showPromptKeywords: () => void;
     imageSelected: (img: any) => void;
     hitBottom: boolean;
 }) {
@@ -436,6 +437,14 @@ export function ChatActions(props: {
                     onChange={onImageSelected}
                 />
                 <UploadIcon/>
+            </div>
+
+            {/* 行业关键词 */}
+            <div
+                className={`${chatStyle["chat-input-action"]} clickable`}
+                onClick={props.showPromptKeywords}
+            >
+                <PromptIcon/>
             </div>
         </div>
     );
@@ -1024,6 +1033,11 @@ export function Chat() {
                         setUserInput("/");
                         onSearch("");
                     }}
+                    showPromptKeywords={() => {
+                        // Click again to close
+                        inputRef.current?.focus();
+                        console.info("行业此刻")
+                    }}
                     imageSelected={(img: any) => {
                         if (useImages.length >= 5) {
                             alert(Locale.Midjourney.SelectImgMax(5));
@@ -1079,7 +1093,9 @@ export function Chat() {
                       ? Locale.Midjourney.InputDisabled
                       : Locale.Chat.Input(submitKey)
               }
-              onInput={(e) => onInput(e.currentTarget.value)}
+              onInput={(e) =>{
+                  onInput(e.currentTarget.value)
+              }}
               value={userInput}
               onKeyDown={onInputKeyDown}
               onFocus={() => setAutoScroll(true)}
