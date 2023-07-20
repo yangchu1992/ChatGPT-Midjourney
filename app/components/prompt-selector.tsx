@@ -2,18 +2,24 @@ import styles from "./prompt-selector.module.scss";
 import {PromptWords, usePromptWordsStore} from "../store/prompt-words";
 import {Chat } from './chat'
 import {useState} from "react";
+import useEventStore from "../store/eventStore";
 
 export function PromptSelector(props: { className?: string })
 {
-  // prompt hints
-  const [showDir, setShowDir] = useState("");
-
   const promptWordsStore = usePromptWordsStore.getState();
-
   promptWordsStore.fetch()
-
   console.log("提示词", promptWordsStore.getUserPromptWords())
   const [active, setActive] = useState(promptWordsStore.getSubType()[0] || "");
+
+
+  const eventHandler = useEventStore((state) => state.eventHandler);
+
+  const handleClick = (text: string) => {
+    // Call the event handling function with the string parameter
+    eventHandler(text);
+  };
+
+
   return (
     <div
       className={`${styles.prompt} ${props.className}`}
@@ -50,7 +56,7 @@ export function PromptSelector(props: { className?: string })
                     {words.map((word) => (
                       <div key={word.id} onClick={() => {
                         console.log("选中", word.text)
-
+                        handleClick(word.text)
                       }}>
                         {word.text}
                       </div>

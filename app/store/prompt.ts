@@ -6,11 +6,9 @@ import { StoreKey } from "../constant";
 
 export interface Prompt {
   id?: number;
-    text?: string;
-    dir?: string;
-    desc?: string;
-    lang_zh?: string;
-    subType?: string;
+  isUser?: boolean;
+  title: string;
+  content: string;
 }
 
 export interface PromptStore {

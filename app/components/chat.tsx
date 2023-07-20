@@ -47,6 +47,7 @@ import dynamic from "next/dynamic";
 
 import {ChatControllerPool} from "../client/controller";
 import {Prompt, usePromptStore} from "../store/prompt";
+import useEventStore from "../store/eventStore";
 import Locale from "../locales";
 
 import {IconButton} from "./button";
@@ -461,6 +462,7 @@ export function Chat() {
     const config = useAppConfig();
     const fontSize = config.fontSize;
 
+
     const [showExport, setShowExport] = useState(false);
 
     const inputRef = useRef<HTMLTextAreaElement>(null);
@@ -473,6 +475,23 @@ export function Chat() {
     const [hitBottom, setHitBottom] = useState(true);
     const isMobileScreen = useMobileScreen();
     const navigate = useNavigate();
+
+
+    const handleEvent = (param: string) => {
+        console.log(`Event triggered from ParentComponent with parameter: ${param}`);
+
+        inputRef.current?.focus();
+        setTimeout(() => {
+            setUserInput( inputRef.current?.value + ' ' + param)
+        }, 60);
+    };
+
+    const setEventHandler = useEventStore((state) => state.setEventHandler);
+
+    const updateEventHandler = () => {
+        // Call setEventHandler with the event handler function and the string parameter
+        setEventHandler((param: string) => handleEvent(param));
+    };
 
     const onChatBodyScroll = (e: HTMLElement) => {
         const isTouchBottom = e.scrollTop + e.clientHeight >= e.scrollHeight - 100;
@@ -1096,6 +1115,7 @@ export function Chat() {
               onInput={(e) =>{
                   onInput(e.currentTarget.value)
               }}
+              onClick={updateEventHandler}
               value={userInput}
               onKeyDown={onInputKeyDown}
               onFocus={() => setAutoScroll(true)}
