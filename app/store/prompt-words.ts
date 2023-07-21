@@ -9,7 +9,7 @@ export interface PromptWords {
   dir?: string;
   desc?: string;
   lang_zh?: string;
-  subType?: string;
+  subType: string;
 }
 
 export interface PromptWordsStore {
@@ -17,8 +17,8 @@ export interface PromptWordsStore {
   latestId: number;
   active: string;
   PromptWords: Record<string, Record<string, PromptWords[]>>;
+  subTypes: string[];
   getSubType: () => string[];
-  getUserPromptWords: () => PromptWords[];
   fetch: () => void;
 }
 
@@ -30,15 +30,9 @@ export const usePromptWordsStore = create<PromptWordsStore>()(
       counter: 0,
       latestId: 0,
       PromptWords: {},
-      subTypes: Array<string>(),
+      subTypes: [],
       active: '',
 
-      getUserPromptWords() {
-        console.log("getUserPromptKeys", get().PromptWords)
-        // const userPromptKeys = Object.values(get().PromptWords ?? {});
-        // userPromptKeys.sort((a, b) => (b.id && a.id ? b.id - a.id : 0));
-        return null;
-      },
       getSubType() {
         return get().subTypes;
       },
@@ -57,13 +51,13 @@ export const usePromptWordsStore = create<PromptWordsStore>()(
             let promptWords: Record<string, Record<string, PromptWords[]>> = {}; // 创建一个新的对象
             console.log("[Notion] got notion from server");
             for (let ele of res) {
-              if (!promptWords[ele.subType]) {
-                promptWords[ele.subType] = {};
+              if (!promptWords[ele.subType as string]) {
+                promptWords[ele.subType as  string] = {};
               }
-              if (!promptWords[ele.subType][ele.dir]) {
-                promptWords[ele.subType][ele.dir] = [];
+              if (!promptWords[ele.subType as string][ele.dir as string]) {
+                promptWords[ele.subType as string][ele.dir as string] = [];
               }
-              promptWords[ele.subType][ele.dir].push(ele);
+              promptWords[ele.subType as string][ele.dir as string].push(ele);
             }
             console.log("===>", promptWords);
             let subTypes = Array.from(new Set(res.map((item) => item.subType)));

@@ -8,7 +8,7 @@ export function PromptSelector(props: { className?: string })
 {
   const promptWordsStore = usePromptWordsStore.getState();
   promptWordsStore.fetch()
-  console.log("提示词", promptWordsStore.getUserPromptWords())
+
   const [active, setActive] = useState(promptWordsStore.getSubType()[0] || "");
 
 
@@ -47,7 +47,7 @@ export function PromptSelector(props: { className?: string })
 
             {Object.entries(promptWordsStore.PromptWords[active] ?? {}).map(
               ([subDir, words]) => (
-                <details className="sub-dir">
+                <details className="sub-dir" key={subDir}>
                   <summary>
                     <span className="title">{subDir}</span>
                     <span className="len">{words.length}</span>
@@ -55,8 +55,7 @@ export function PromptSelector(props: { className?: string })
                   <div className="list">
                     {words.map((word) => (
                       <div key={word.id} onClick={() => {
-                        console.log("选中", word.text)
-                        handleClick(word.text)
+                        handleClick(word.text as string)
                       }}>
                         {word.text}
                       </div>

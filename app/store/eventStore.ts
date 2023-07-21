@@ -1,7 +1,7 @@
 // eventStore.ts
 import create, { State, SetState } from 'zustand';
 
-interface EventState extends State {
+interface EventState {
   eventHandler: (arg: string) => void;
   setEventHandler: (handler: (arg: string) => void) => void;
 }
